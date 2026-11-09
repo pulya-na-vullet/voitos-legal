@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Удаление аккаунта и данных · Voitos</title><style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0 16px 40px;
+      background: #0b1015;
+      color: #e6edf3;
+      font: 16px/1.6 -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    header, footer, main { max-width: 820px; margin: 0 auto; }
+    header {
+      padding: 20px 0 12px;
+      border-bottom: 1px solid #1e2a35;
+      font-size: 14px;
+    }
+    header a { color: #2dd4bf; text-decoration: none; margin-right: 14px; }
+    header a:hover { text-decoration: underline; }
+    main { padding-top: 20px; }
+    h1 { font-size: 26px; line-height: 1.25; margin: 0 0 16px; }
+    h2 { font-size: 20px; margin: 28px 0 10px; color: #9fe8dd; }
+    h3 { font-size: 17px; margin: 22px 0 8px; }
+    p, li { color: #cfd8e3; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+    th, td { border: 1px solid #1e2a35; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #121b24; }
+    code { background: #121b24; padding: 1px 5px; border-radius: 4px; font-size: 14px; }
+    blockquote { margin: 12px 0; padding: 8px 14px; border-left: 3px solid #2dd4bf; color: #a9b7c6; }
+    footer {
+      margin-top: 36px;
+      padding-top: 14px;
+      border-top: 1px solid #1e2a35;
+      color: #7b8b9a;
+      font-size: 13px;
+    }
+  </style></head><body>
+<header><a href="privacy.html">Политика конфиденциальности</a><a href="terms.html">Условия использования</a><a href="account-deletion.html">Удаление аккаунта</a></header>
+<main><h1>Удаление аккаунта и данных</h1>
+<p>Требование RuStore, Google Play и App Store: у пользователя должна быть возможность удалить аккаунт
+и связанные данные, а у разработчика — опубликованное описание этой процедуры.</p>
+<h2>Для пользователя</h2>
+<h3>Способ 1 — в приложении</h3>
+<ol>
+<li>Откройте приложение <strong>Voitos</strong> и войдите в аккаунт.</li>
+<li>Перейдите в <strong>Личный кабинет</strong>.</li>
+<li>Прокрутите до раздела <strong>«Аккаунт»</strong> → <strong>«Удалить аккаунт»</strong>.</li>
+<li>Подтвердите действие кодом, который придёт в мессенджер MAX.</li>
+</ol>
+<p>Аккаунт блокируется сразу, данные удаляются в течение 30 дней.</p>
+<h3>Способ 2 — письмом в поддержку</h3>
+<p>Если доступ к приложению утрачен, отправьте запрос:</p>
+<ul>
+<li>на e-mail: <code>[support@...]</code></li>
+<li>тема: «Удаление аккаунта»</li>
+<li>в письме укажите номер телефона, привязанный к аккаунту</li>
+</ul>
+<p>Запрос обрабатывается в течение 10 рабочих дней; данные удаляются в течение 30 дней с момента
+подтверждения заявки.</p>
+<h2>Что удаляется</h2>
+<table>
+<thead>
+<tr>
+<th>Данные</th>
+<th>Удаляется</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Номер телефона, имя, адрес, дата рождения</td>
+<td>да</td>
+</tr>
+<tr>
+<td>Фотографии профиля и аватары</td>
+<td>да</td>
+</tr>
+<tr>
+<td>Заявки, комментарии, статусы (кроме расчётных документов)</td>
+<td>да</td>
+</tr>
+<tr>
+<td>Голоса в голосованиях</td>
+<td>обезличиваются (остаётся факт голоса без привязки к человеку)</td>
+</tr>
+<tr>
+<td>Токены устройств, push-идентификаторы</td>
+<td>да</td>
+</tr>
+<tr>
+<td>Переписка в чате группы</td>
+<td>удаляется авторство, сообщения обезличиваются</td>
+</tr>
+</tbody>
+</table>
+<h2>Что сохраняется и почему</h2>
+<table>
+<thead>
+<tr>
+<th>Данные</th>
+<th>Срок</th>
+<th>Основание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Документы по сборам и расчётам (суммы, чеки, комиссии)</td>
+<td>до 5 лет</td>
+<td>бухгалтерское законодательство, разрешение споров</td>
+</tr>
+<tr>
+<td>Журналы безопасности (факты входа, IP)</td>
+<td>до 12 месяцев</td>
+<td>защита от мошенничества</td>
+</tr>
+</tbody>
+</table>
+<p>Данные хранятся в обезличенном виде, без привязки к удалённому аккаунту, где это технически
+возможно.</p>
+<h2>Что уже сделано в коде</h2>
+<ul>
+<li>[x] <code>POST /api/v1/me/delete</code> — отзывает все токены, отвязывает устройство, стирает уведомления,
+      черновики регистрации и OTP; персональные данные анонимизируются (<code>BotUser.anonymize()</code>),
+      <code>max_user_id</code> заменяется служебным значением — повторная регистрация с того же телефона
+      создаёт нового пользователя.</li>
+<li>[x] Экран в приложении: <strong>Личный кабинет → «Удалить аккаунт»</strong> с диалогом подтверждения;
+      после удаления приложение выходит на экран входа.</li>
+<li>[x] Тесты <code>api/tests_account_deletion.py</code>: подтверждение обязательно, данные стёрты, токен
+      недействителен, телефон можно зарегистрировать заново.</li>
+<li>[ ] Подтверждение операции кодом из MAX (сейчас достаточно явного диалога в приложении).</li>
+<li>[ ] Публичная страница <code>https://[домен]/account-deletion</code> с этой инструкцией (маркеты требуют
+      ссылку, доступную без установки приложения).</li>
+</ul>
+<h3>Что происходит в базе</h3>
+<p>Строка <code>BotUser</code> остаётся, потому что на неё ссылаются расчётные документы (сборы, чеки, заявки).
+После удаления в ней пусты телефон, имя, адрес, дата рождения, PIN, аватар и <code>chat_id</code>; статус
+анкеты — <code>deleted</code>, <code>deleted_at</code> заполнен. Восстановить личность по такой записи нельзя.</p>
+<h2>Ссылки для карточки магазина</h2>
+<ul>
+<li>Политика конфиденциальности: <code>https://[домен]/privacy</code></li>
+<li>Условия использования: <code>https://[домен]/terms</code></li>
+<li>Удаление аккаунта: <code>https://[домен]/account-deletion</code></li>
+</ul></main>
+<footer>Voitos · Справочная служба: <a href="tel:+79188028767" style="color:#2dd4bf">+7 918 802-87-67</a></footer>
+</body></html>
